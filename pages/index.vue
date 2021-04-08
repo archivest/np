@@ -38,13 +38,18 @@
     </div>
     <client-only>
       <stack v-show="loaded" :column-min-width="500" :column-min-height="500" monitor-images-loaded class="mt-2">
-        <stack-item v-for="photo in photos" :key="photo">
-          <img :src="photo" alt="photo" @load="!loadedPhotos.includes(photo) && loadedPhotos.push(photo)" />
+        <stack-item v-for="(photo, photoindex) in photos" :key="photoindex">
+          <img :src="photo" alt="photo" @click="index = photoindex" @load="!loadedPhotos.includes(photo) && loadedPhotos.push(photo)" />
         </stack-item>
       </stack>
     </client-only>
     <LoadingSpinner v-show="!loaded" id="loadingSpinner" />
     <div v-show="!loaded" id="loader" />
+    <CoolLightBox 
+      :items="photos" 
+      :index="index"
+      @close="index = null">
+    </CoolLightBox>
   </v-container>
 </template>
 
@@ -62,6 +67,7 @@ export default {
       categories,
       subCategory,
       category,
+      index: null,
       loadedPhotos: [],
       staticData,
       showAccordionMenu: false,

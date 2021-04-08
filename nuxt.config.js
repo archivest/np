@@ -1,30 +1,28 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from "vuetify/es5/util/colors";
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - photos-nuxt',
-    title: 'photos-nuxt',
+    titleTemplate: "%s - photos-nuxt",
+    title: "photos-nuxt",
     htmlAttrs: {
-      lang: 'en'
+      lang: "en"
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: "" }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vue-stack-grid.js', mode: 'client' }
+    { src: "~/plugins/vue-stack-grid.js", mode: "client" },
+    { src: "~/plugins/vue-cool-lightbox.js", mode: "client" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,15 +31,15 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
+    "@nuxtjs/stylelint-module",
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
+    "@nuxtjs/vuetify"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    "@nuxtjs/axios"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -49,7 +47,7 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ["~/assets/variables.scss"],
     theme: {
       dark: false,
       themes: {
@@ -57,16 +55,15 @@ export default {
           primary: colors.blue,
           accent: colors.grey,
           secondary: colors.amber.darken3,
-          info: '#1e88e5',
-          warning: '#fb8c00',
-          error: '#ff5252',
-          success: '#06d79c'
+          info: "#1e88e5",
+          warning: "#fb8c00",
+          error: "#ff5252",
+          success: "#06d79c"
         }
       }
     }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
-}
+  build: {}
+};
