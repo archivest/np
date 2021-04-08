@@ -1,18 +1,39 @@
 <template>
   <v-container>
     <v-toolbar id="appBar" dense class="pa-0 mx-auto">
-      <v-app-bar-nav-icon v-show="$vuetify.breakpoint.smAndDown" @click="showAccordionMenu = !showAccordionMenu"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        v-show="$vuetify.breakpoint.smAndDown"
+        @click="showAccordionMenu = !showAccordionMenu"
+      ></v-app-bar-nav-icon>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-menu v-for="menuCategory in categories" :key="menuCategory" open-on-hover rounded :close-on-content-click="false" class="categoryMenu">
+        <v-menu
+          v-for="menuCategory in categories"
+          :key="menuCategory"
+          open-on-hover
+          rounded
+          :close-on-content-click="false"
+          class="categoryMenu"
+        >
           <template #activator="{ on, attrs }" class="hidden-md-and-up">
-            <v-btn color="secondary" v-bind="attrs" text class="ml-10" v-on="on">
+            <v-btn
+              color="secondary"
+              v-bind="attrs"
+              text
+              class="ml-10"
+              v-on="on"
+            >
               {{ menuCategory }}
             </v-btn>
           </template>
 
           <v-list rounded>
-            <v-list-item v-for="menuSubCategory in Object.keys(staticData[menuCategory])" :key="menuSubCategory">
-              <v-list-item-title @click="changePhotos(menuCategory, menuSubCategory)">
+            <v-list-item
+              v-for="menuSubCategory in Object.keys(staticData[menuCategory])"
+              :key="menuSubCategory"
+            >
+              <v-list-item-title
+                @click="changePhotos(menuCategory, menuSubCategory)"
+              >
                 {{ menuSubCategory }}
               </v-list-item-title>
             </v-list-item>
@@ -22,12 +43,22 @@
     </v-toolbar>
     <div v-show="showAccordionMenu">
       <v-expansion-panels accordion focusable>
-        <v-expansion-panel v-for="menuCategory in categories" :key="menuCategory">
-          <v-expansion-panel-header>{{ menuCategory }}</v-expansion-panel-header>
+        <v-expansion-panel
+          v-for="menuCategory in categories"
+          :key="menuCategory"
+        >
+          <v-expansion-panel-header>{{
+            menuCategory
+          }}</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-list>
-              <v-list-item v-for="menuSubCategory in Object.keys(staticData[menuCategory])" :key="menuSubCategory">
-                <v-list-item-title @click="changePhotos(menuCategory, menuSubCategory)">
+              <v-list-item
+                v-for="menuSubCategory in Object.keys(staticData[menuCategory])"
+                :key="menuSubCategory"
+              >
+                <v-list-item-title
+                  @click="changePhotos(menuCategory, menuSubCategory)"
+                >
                   {{ menuSubCategory }}
                 </v-list-item-title>
               </v-list-item>
@@ -37,9 +68,28 @@
       </v-expansion-panels>
     </div>
     <client-only>
-      <stack v-show="loaded" :column-min-width="500" :column-min-height="500" monitor-images-loaded class="mt-2">
-        <stack-item v-for="photo in photos" :key="photo">
-          <img :src="photo" alt="photo" @load="!loadedPhotos.includes(photo) && loadedPhotos.push(photo)" />
+      <CoolLightBox
+        :items="photos"
+        :index="index"
+        @close="index = null"
+        :effect="'fade'"
+        :fullScreen="true"
+      >
+      </CoolLightBox>
+      <stack
+        v-show="loaded"
+        :column-min-width="500"
+        :column-min-height="500"
+        monitor-images-loaded
+        class="mt-2"
+      >
+        <stack-item v-for="(photo, photoindex) in photos" :key="photoindex">
+          <img
+            :src="photo"
+            alt="photo"
+            @click="index = photoindex"
+            @load="!loadedPhotos.includes(photo) && loadedPhotos.push(photo)"
+          />
         </stack-item>
       </stack>
     </client-only>
@@ -49,51 +99,49 @@
 </template>
 
 <script>
-const staticData = require('../static.json')
+import CoolLightBox from "vue-cool-lightbox";
+const staticData = require("../static.json");
 
 export default {
-  components: {},
+  components: {
+    CoolLightBox,
+  },
   data() {
-    const categories = Object.keys(staticData)
-    const category = categories[0]
-    const subCategory = Object.keys(staticData[category])[0]
+    const categories = Object.keys(staticData);
+    const category = categories[0];
+    const subCategory = Object.keys(staticData[category])[0];
 
     return {
       categories,
       subCategory,
       category,
+      index: null,
       loadedPhotos: [],
       staticData,
       showAccordionMenu: false,
-      collapsed: this.$vuetify.breakpoint.smAndDown
-    }
+      collapsed: this.$vuetify.breakpoint.smAndDown,
+    };
   },
   computed: {
     photos() {
-      return staticData[this.category][this.subCategory]
+      return staticData[this.category][this.subCategory];
     },
     loaded() {
-      const photos = this.photos
+      const photos = this.photos;
 
-      return photos.every(photo => this.$data.loadedPhotos.includes(photo))
-    }
+      return photos.every((photo) => this.$data.loadedPhotos.includes(photo));
+    },
   },
   methods: {
     changePhotos(menuCategory, menuSubCategory) {
-      this.category = menuCategory
-      this.subCategory = menuSubCategory
-    }
-  }
-}
+      this.category = menuCategory;
+      this.subCategory = menuSubCategory;
+    },
+  },
+};
 </script>
 
 <style scoped>
-img {
-  margin: 0;
-  width: 100%;
-  height: auto;
-}
-
 #appBar {
   display: flex;
   justify-content: center;
