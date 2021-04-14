@@ -90,7 +90,7 @@
       class="loader"
       type="spin"
       color="#5ac1dd"
-      :size="{ width: '48px', height: '48px' }"
+      :size="{ width: '16%', height: '16%' }"
     ></vue-loading>
     <div v-show="!loaded" id="loader" />
     <CoolLightBox :items="photos" :index="index" @close="index = null">
@@ -140,11 +140,12 @@ export default {
 
 <style scoped>
 .loader {
+  margin: auto;
   position: fixed;
-  left: 50%;
-  top: 50%;
-  width: 100%;
-  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 img {
@@ -166,15 +167,5 @@ img {
 
 .categoryMenu {
   flex: 1;
-}
-
-#loader {
-  background: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
 }
 </style>
