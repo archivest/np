@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 const staticData = require("../static.json");
 
 export default {
@@ -65,7 +66,8 @@ export default {
       collapsed: this.$vuetify.breakpoint.smAndDown,
     };
   },
-  computed: {},
+  computed: { ...mapGetters(["loggedInUser"]) },
+  middleware: "auth",
   methods: {
     // Send a request to the API to delete a category.
     DeleteCategory(menuCategory) {},
